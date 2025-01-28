@@ -1,5 +1,11 @@
 package chess;
 
+import java.util.Arrays;
+import java.util.Objects;
+
+import static chess.ChessGame.TeamColor.*;
+import static chess.ChessPiece.PieceType.*;
+
 /**
  * A chessboard that can hold and rearrange chess pieces.
  * <p>
@@ -7,6 +13,8 @@ package chess;
  * signature of the existing methods.
  */
 public class ChessBoard {
+
+    public ChessPiece [][] squares = new ChessPiece[8][8];
 
     public ChessBoard() {
         
@@ -19,7 +27,7 @@ public class ChessBoard {
      * @param piece    the piece to add
      */
     public void addPiece(ChessPosition position, ChessPiece piece) {
-        throw new RuntimeException("Not implemented");
+        squares[position.getRow()-1][position.getColumn()-1] = piece;
     }
 
     /**
@@ -30,7 +38,7 @@ public class ChessBoard {
      * position
      */
     public ChessPiece getPiece(ChessPosition position) {
-        throw new RuntimeException("Not implemented");
+        return squares[position.getRow()-1][position.getColumn()-1];
     }
 
     /**
@@ -38,6 +46,49 @@ public class ChessBoard {
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
-        throw new RuntimeException("Not implemented");
+        squares[0][0] = new ChessPiece(WHITE, ROOK);
+        squares[0][1] = new ChessPiece(WHITE, KNIGHT);
+        squares[0][2] = new ChessPiece(WHITE, BISHOP);
+        squares[0][3] = new ChessPiece(WHITE, QUEEN);
+        squares[0][4] = new ChessPiece(WHITE, KING);
+        squares[0][5] = new ChessPiece(WHITE, BISHOP);
+        squares[0][6] = new ChessPiece(WHITE, KNIGHT);
+        squares[0][7] = new ChessPiece(WHITE, ROOK);
+        for(int i=0;i<8;i++){
+            squares[1][i] = new ChessPiece(WHITE, PAWN);
+        }
+
+        squares[7][0] = new ChessPiece(BLACK, ROOK);
+        squares[7][1] = new ChessPiece(BLACK, KNIGHT);
+        squares[7][2] = new ChessPiece(BLACK, BISHOP);
+        squares[7][3] = new ChessPiece(BLACK, QUEEN);
+        squares[7][4] = new ChessPiece(BLACK, KING);
+        squares[7][5] = new ChessPiece(BLACK, BISHOP);
+        squares[7][6] = new ChessPiece(BLACK, KNIGHT);
+        squares[7][7] = new ChessPiece(BLACK, ROOK);
+        for(int i=0;i<8;i++){
+            squares[6][i] = new ChessPiece(BLACK, PAWN);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessBoard that = (ChessBoard) o;
+        return Objects.deepEquals(squares, that.squares);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(squares);
+    }
+
+    @Override
+    public String toString() {
+        return "ChessBoard{" +
+                "squares=" + Arrays.toString(squares) +
+                '}';
     }
 }
